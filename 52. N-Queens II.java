@@ -24,32 +24,16 @@ class Solution {
     }
 
     public boolean isCheck(char[][] board, int row, int col) {
-        for(int pivot = row; pivot < board.length; pivot++) {
-            if(board[pivot][col] == '1'){
-                return false;
-            }
-        }
-        for(int pivot = col; pivot < board[row].length; pivot++) {
-            if(board[row][pivot] == '1'){
-                return false;
-            }
-        }
-        for(int pivot = row; pivot >=0; pivot--) {
-            if(board[pivot][col] == '1'){
-                return false;
-            }
-        }
-        for(int pivot = col; pivot >=0; pivot--) {
-            if(board[row][pivot] == '1'){
-                return false;
-            }
-        }
+     
         return isCrossCheck(board, row, col, -1, +1)
+                && isCrossCheck(board, row, col, 0, +1)
+                && isCrossCheck(board, row, col, 0, -1)
+                && isCrossCheck(board, row, col, +1, 0)
+                && isCrossCheck(board, row, col, -1, 0)
                 && isCrossCheck(board, row, col, +1, +1)
                 && isCrossCheck(board, row, col, -1, -1)
                 && isCrossCheck(board, row, col, +1, -1);
     }
-    
     public boolean isCrossCheck(char[][] board, int row, int col, int plusRow, int plusCol)  {
         if(row < 0 || col < 0 || row >= board.length || col >= board.length) {
             return true;
