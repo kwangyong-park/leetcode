@@ -20,6 +20,7 @@ class Solution {
       }
       
       for(int i = pivot+1  ; i < chars.length; i++) {
+         bk(chars, ip + chars[i], pivot+1, result);
          bk(chars, ip + chars[i] + ".", pivot+1, result);
       }
     }
