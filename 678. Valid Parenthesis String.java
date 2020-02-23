@@ -2,15 +2,10 @@
 class Solution {
 
     public boolean checkValidString(String s) {
-        if (s.equals("")) return true;
-
-        Stack<Character> stack = new Stack();
-        char[] chars = s.toCharArray();
-        return bk(chars, 0, 0);
+        return bk(s.toCharArray(), 0, 0);
     }
 
     public boolean bk(char[] chars, int commited, int count) {
-
         for(int i = commited; i < chars.length; i++) {
             if(count < 0) {
                 return false;
