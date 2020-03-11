@@ -1,42 +1,42 @@
 class Solution {
-    
     public int[][] merge(int[][] intervals) {
-        int[] sort = new int[10000];
-        int label = 1;
-        int max = 0;
-        for(int i = 0 ; i < intervals.length; i++) {
-            int cur = label;
-            for(int j = intervals[i][0]; j <= intervals[i][1]; j++) {
-                if(sort[j] != 0) {
-                    cur = sort[j];
+        if(intervals.length == 0) {
+            return new int[0][];
+        }
+        Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
+
+        Stack<Point> points = new Stack<>();
+
+        for(int i = 0; i < intervals.length; i++) {
+            if(points.empty()) {
+                points.push(new Point(intervals[i][0], intervals[i][1]));
+            } else {
+                int s = intervals[i][0];
+                int e = intervals[i][1];
+                Point point = points.pop();
+                if(Math.abs(point.e - s) == 0 ||
+                 Math.abs(point.s - s) == 0 || Math.abs(point.e - e) == 0 ||
+                        (point.s <= s && point.e >= s)) {
+                    point.s = Math.min(point.s, s);
+                    point.e = Math.max(point.e, e);
+                    points.push(point);
+                } else {
+                    points.push(point);
+                    points.push(new Point(s, e));
                 }
-                sort[j] = cur;
-                max  = j;
-            }
-            label++;
-        }
-        List<List<Integer>> result = new ArrayList<>();
-        int cur = 0;
-        int min = 0;
-        for(int i = 0 ; i < sort.length; i++) {
-            if(sort[i] == cur) {
-                continue;
-            }
-            if(cur > label){
-                break;
-            }
-            if(sort[i] != cur) {
-                if(sort[min] != 0 && sort[i-1] != 0) {
-                    result.add(Arrays.asList(min, i - 1));
-                }
-                min = i;
-                cur = sort[i];
             }
         }
-        int[][] a = new int[result.size()][];
-        for(int i = 0 ; i < a.length; i++) {
-            a[i] = new int[] {result.get(i).get(0), result.get(i).get(1)};
-        }
-        return a;
+        int[][] result = points.stream().map(p -> new int[]{p.s, p.e}).toArray(int[][]::new);
+        return result;
     }
+
+    class Point {
+        int s;
+        int e;
+        public Point(int s, int e) {
+            this.s = s;
+            this.e = e;
+        }
+    }
+
 }
