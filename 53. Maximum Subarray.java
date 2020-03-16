@@ -17,8 +17,6 @@ class Solution {
         int leftSum = sub(left, mid, nums);
         int rightSum = sub(mid, right, nums);
         int childsum = Math.max( rightSum, leftSum );
-        return Math.max(childsum,sum);
-        
-        
+        return Math.max(childsum,sum);        
     }
 }
