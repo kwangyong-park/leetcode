@@ -16,10 +16,7 @@ class Solution {
                 tmp.add(nums[i]);
             }
             bk(nums, tmp, i+1, result);
-            if(tmp.get(tmp.size() - 1) == nums[i]) {
-                tmp.remove(tmp.size() - 1);
-            }
+            tmp.remove(tmp.size() - 1);
         }
-        
     }
 }
