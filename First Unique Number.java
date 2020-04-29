@@ -40,10 +40,9 @@ class FirstUnique {
             node = new Node(value);
             p.add(node);
             map.put(value, node);
-        } else {
+        } else if(node.cnt == 1) {
             p.remove(node);
             node.cnt++;
-            p.add(node);
         }
     }
 }
