@@ -13,7 +13,6 @@ class Solution {
             set.add(c[i]);
         }
 
-        
         return set.stream().map(k -> map.getOrDefault(k, 0)).reduce(0, Integer::sum);
     }
 }
