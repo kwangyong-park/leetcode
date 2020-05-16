@@ -1,22 +1,12 @@
 class Solution {
-    public int maxSubArray(int[] nums) {
-        return sub(0, nums.length-1, nums);       
-    }
-    
-    public int sub(int left, int right, int[] nums){
-        
-        if(left == right) {
-            return nums[left];
-        }
-        int sum = 0;
-        for(int i = left; i <= right; i++) {
-            sum+=nums[i];
+    public int maxSubarraySumCircular(int[] A) {
+        int ret = Integer.MIN_VALUE;
+        int val = A[0];
+        for(int i = 1; i < A.length; i ++) {
+            val = Math.max(Math.max(val, 0) + A[i], val);
+            ret = Math.max(val, ret);
         }
         
-        int mid = ( left + right) / 2;        
-        int leftSum = sub(left, mid, nums);
-        int rightSum = sub(mid, right, nums);
-        int childsum = Math.max( rightSum, leftSum );
-        return Math.max(childsum,sum);        
+        return ret;
     }
 }
