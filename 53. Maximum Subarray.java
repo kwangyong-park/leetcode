@@ -1,12 +1,11 @@
 class Solution {
-    public int maxSubarraySumCircular(int[] A) {
-        int ret = Integer.MIN_VALUE;
-        int val = A[0];
-        for(int i = 1; i < A.length; i ++) {
-            val = Math.max(Math.max(val, 0) + A[i], val);
-            ret = Math.max(val, ret);
+    public int maxSubArray(int[] nums) {
+        int max = Integer.MIN_VALUE;
+        int cur = 0;
+        for(int i = 0 ; i < nums.length; i ++) {
+            max = Math.max(cur + nums[i], max);
+            cur = Math.max(cur + nums[i], 0); 
         }
-        
-        return ret;
+        return max;
     }
 }
