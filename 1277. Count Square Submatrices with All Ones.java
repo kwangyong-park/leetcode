@@ -1,30 +1,19 @@
-//This does not solve the code
 class Solution {
-    public int countSquares(int[][] arr) {
-        int n = arr.length;
-        int m = arr[0].length;
-
-        int ret = 0;
-        for(int k = 0; k < Math.max(n, m); k++) {
-            for(int i = 0; i < n; i ++) {
-                for(int j = 0; j < m; j++) {
-                    int q = 0;
-                    while(q++ < k) {
-                        if(q == k -1) {
-                            ret++;
-                        }
-                        try {
-                            if (arr[i + q][j + q] == 0) {
-                                break;
-                            }
-                        } catch (Exception e) {
-                            break;
-                        }
-                    }
-
+    public int countSquares(int[][] matrix) {
+        int cnt = 0, col = matrix[0].length, row = matrix.length; 
+        for(int i = 0 ; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                if(j == 0 || i == 0) {
+                    cnt +=matrix[i][j];
+                    continue;
+                }
+                if(matrix[i][j] != 0) {
+                    int square = Math.min(matrix[i][j-1], Math.min(matrix[i-1][j], matrix[i-1][j-1])) + 1;
+                    matrix[i][j] = square;
+                    cnt+=square;
                 }
             }
         }
-        return ret;
+        return cnt;
     }
 }
