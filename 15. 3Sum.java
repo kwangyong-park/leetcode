@@ -42,8 +42,7 @@ class Solution {
             perm(nums, temp, results);
             temp.remove(n);
         }
-        
-    }
+   }
     
     class Num {
         int num;
