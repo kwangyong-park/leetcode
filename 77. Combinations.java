@@ -1,38 +1,19 @@
 class Solution {
-   int[] hours = new int[]{1,2,4,8};
-    int[] mines = new int[]{1,2,4,8,16,32};
-    Set<String> ret = new HashSet<>();
-    public List<String> readBinaryWatch(int num) {
-
-        findWatch(new ArrayList<>(), 0, num, 0,0 );
-        return ret.stream().collect(Collectors.toList());
+   
+    List<List<Integer>> combineRet = new ArrayList<>();
+    public List<List<Integer>> combine(int n, int k) {
+        combine1(new ArrayList<Integer>(), 0, n, k);
+        return combineRet;
     }
-
-    public void findWatch(List<String> check, int count, int n, int hour, int min) {
-        if(hour > 11 || min > 59) {
+    public void combine1(List<Integer> check, int count , int n, int k) {
+        if(check.size() == k) {
+            combineRet.add(check.stream().collect(Collectors.toList()));
             return;
         }
-        if(count == n) {
-            if(min < 10) {
-                ret.add(hour + ":0" + min);
-            } else {
-                ret.add(hour + ":" + min);
-            }
-
-            return;
-        }
-
-        for(int h : hours) {
-            if(check.contains("h"+h)) continue;
-            check.add("h"+h);
-            findWatch(check, count + 1, n, hour + h, min);
-            check.remove("h"+h);
-        }
-        for(int m : mines) {
-            if(check.contains("m"+m)) continue;
-            check.add("m"+m);
-            findWatch(check, count + 1, n, hour , min + m);
-            check.remove("m"+m);
+        for(int i = count+1 ; i <= n; i++) {
+            check.add(i);
+            combine1(check, i, n, k);
+            check.remove(check.size() -1 );
         }
     }
 }
