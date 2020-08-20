@@ -1,59 +1,36 @@
-
 class Solution {
-    class Node {
-        int val;
-        Map<Integer, Node> children = new HashMap<>();
+    public int[] findOrder(int n, int[][] p) {
+        int[] ret = new int[n];
+        int[] indegree = new int[n];
+        List<List<Integer>> adjList = new ArrayList<>();
 
-        public Node(int val) {
-            this.val = val;
+        for(int i = 0; i < n; i++)
+            adjList.add(new ArrayList<>());
+
+        //p[1] => p[0]
+        for(int[] dest: p) {
+            indegree[dest[0]]++;
+            adjList.get(dest[1]).add(dest[0]);
         }
-    }
-
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
-       
-        Arrays.sort(prerequisites, (o1, o2) -> {
-            if(o1[1] < o2[1]) {
-                return 0;
-            } else {
-                return 1;
-            }
-        });
-        Map<Integer, Node> map = new HashMap<>();
-
-        Node root = null;
-        for(int[] p : prerequisites) {
-            if(root == null) {
-                root = new Node(p[1]);
-                map.put(root.val, root);
-            }
-            Node parent = map.get(p[1]);
-            Node node = map.getOrDefault(p[0], new Node(p[0]));
-            parent.children.put(node.val, node);
-            map.put(node.val, node);
-        }
-
-        List<Integer> list = new ArrayList<>();
-        ret(list, root);       
-        
-        return list.stream().mapToInt(i->i).toArray();
-
-    }
-
-    public void ret(List<Integer> list, Node root) {
-        if(root == null) {
-            return;
-        }
-        if(!list.contains(root.val)) {
-            list.add(root.val);
-        }
-        for(Map.Entry<Integer, Node> entry : root.children.entrySet()) {
-            if(!list.contains(entry.getValue().val)) {
-                list.add(entry.getValue().val);
+        Queue<Integer> q = new LinkedList<>();
+        for(int i = 0; i < n; i++) {
+            if(indegree[i] == 0) {
+                q.offer(i);
             }
         }
-        for(Map.Entry<Integer, Node> entry : root.children.entrySet()) {
-            ret(list, entry.getValue());
+
+        int idx = 0;
+        while(!q.isEmpty()) {
+            int node = q.poll();
+            ret[idx++] = node;
+            List<Integer> lists = adjList.get(node);
+            for(int dest : lists) {
+                if(--indegree[dest] == 0) {
+                    q.offer(dest);
+                }
+            }
         }
 
+        return idx == n ? ret : new int[0];
     }
 }
