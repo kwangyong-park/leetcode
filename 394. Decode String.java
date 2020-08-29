@@ -1,42 +1,34 @@
-import java.util.Stack;
-
 class Solution {
+public String decodeString(String s) {
+        Stack<Character> stack = new Stack<>();
 
-    Stack<String> sb = new Stack<>();
-    char[] chars;
-    public String decodeString(String s) {
-        chars = s.toCharArray();
-        rec(-1);
-        return sb.toString();
-    }
-
-    public void rec(int pivot) {
-        String text = "";
-        String count = "";
-        for(int i = pivot + 1; i < chars.length; i++) {
-            if(chars[i] == ']') {
-                sb.push(text);
-                return;
-            } else if(chars[i] == '[') {
-                for(int k = 0; k < Integer.valueOf(count); k++) {
-                    rec(i);
+        for(char c : s.toCharArray()) {
+            if(c == ']') {
+                String ret = "";
+                while(stack.peek() != '[') {
+                    ret  += stack.pop();
                 }
-                
-            } else if((chars[i] >= 'a' && chars[i] <= 'z') ||
-                        chars[i] >= 'A' && chars[i] <= 'Z') {
-                text += chars[i];
-
+                stack.pop(); // [
+                String cnt = "";
+                while(!stack.isEmpty() && Character.isDigit(stack.peek())) {
+                    cnt = stack.pop() + cnt;
+                }
+                for(int i = 0 ; i < Integer.valueOf(cnt); i++) {
+                    for(int j = ret.length() -1 ; j >= 0 ; j--) {
+                        stack.push(ret.charAt(j));
+                    }
+                }
             } else {
-                count += chars[i] ;
+                stack.push(c);
             }
+
         }
+        String ret = "";
+
+        while(!stack.isEmpty()) {
+            ret = stack.pop() + ret;
+        }
+
+        return ret;
     }
-
-
-
-    public static void main(String[] args) {
-        Solution s = new Solution();
-        System.out.println(s.decodeString("3[a2[c]]"));
-    }
-
 }
