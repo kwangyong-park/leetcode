@@ -1,32 +1,18 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
+
+import java.util.*;
+import java.util.stream.Collectors;
 class Solution {
-    Map<Integer, Pair<Integer, Integer>> map = new HashMap<>();
-    PriorityQueue<Pair<Integer, Integer>> q = new PriorityQueue<>((a, b) -> b.getValue()-a.getValue());
+    Map<Integer, Integer> map = new HashMap<>();
     public int[] findFrequentTreeSum(TreeNode root) {
 
         sum(root);
-        if(q.isEmpty()) return new int[]{};
-        int cnt = q.peek().getValue();
-        List<Integer> ret = new ArrayList<>();
-        ret.add(q.poll().getKey());
-        while(!q.isEmpty() && q.peek().getValue() == cnt) {
-            ret.add(q.poll().getKey());
+        Optional<Map.Entry<Integer, Integer>> entry = map.entrySet().stream().max(Comparator.comparingInt(Map.Entry::getValue));
+
+        if(!entry.isPresent()) {
+            return new int[]{};
         }
-        return ret.stream().mapToInt(i -> i).toArray();
+        int max = entry.get().getValue();
+        return map.entrySet().stream().filter(a -> a.getValue() == max).map(a -> a.getKey()).collect(Collectors.toList()).stream().mapToInt(i -> i).toArray();
     }
 
     public int sum(TreeNode root) {
@@ -34,12 +20,8 @@ class Solution {
         int left = sum(root.left);
         int right = sum(root.right);
         int sum = root.val + left + right;
-        Pair<Integer, Integer> pair = map.getOrDefault(sum, new Pair<>(sum, 0));
-        if(pair.getValue() > 0) {            
-            q.remove(pair);
-        } 
-        map.put(sum, new Pair(pair.getKey(), pair.getValue() + 1));
-        q.add(pair);
+        int cnt = map.getOrDefault(sum, 0);
+        map.put(sum, cnt + 1);
         return sum;
     }
 }
