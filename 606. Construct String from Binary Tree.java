@@ -9,6 +9,7 @@ class Solution {
         String left =  t.left != null ? "("+ tree2str(t.left) +")" : "()";
         String right = t.right != null ?"(" + tree2str(t.right) + ")": "";
         
+        
         return t.val + left + right;        
     }
 }
