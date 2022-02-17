@@ -1,26 +1,33 @@
 class Solution {
-    
+    Set<String> check = new HashSet<>();
+    List<List<Integer>> result = new ArrayList<>();
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> ret = new ArrayList();
-        perm(candidates, 0, new ArrayList(), ret, 0, target);
-        return ret;
+        Arrays.sort(candidates);
+        rec(candidates, target, new ArrayList<>());
+        return result;
     }
-    
-    public void perm(int[] can, int i, List<Integer> temp, List<List<Integer>> ret, int sum, int tar) {
-   
-        if(tar == sum) {
-            List<Integer> res = new ArrayList(temp);            
-            ret.add(res);
-            return;
-        } else if(tar < sum) {
-            return;  
-        } 
-        
-        for(; i < can.length; i++){
-            temp.add(can[i]);
-            perm(can, i, temp, ret, sum+can[i], tar);
-            temp.remove(temp.size() - 1);
+    public void rec(int[] candidates, int target, List<Integer> list)  {
+
+        int ans = list.stream().reduce(0, Integer::sum);
+        if(ans == target) {
+            Stream<Integer> s = list.stream().sorted();
+            String value = s.map(Object::toString).collect(Collectors.joining(","));
+            if(check.contains(value)) {
+                return;
+            }
+            check.add(value);
+            result.add(list.stream().sorted().collect(Collectors.toList()));
         }
-    
+        for(int candidate : candidates) {
+            if(ans + candidate <= target) {
+                list.add(candidate);
+                rec(candidates, target, list);
+                list.remove(list.size() -1 );
+            } else {
+                break;
+            }
+
+        }
+
     }
 }
