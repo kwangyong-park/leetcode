@@ -1,27 +1,19 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        return divide(nums, 0, nums.length -1);
-    }
-   private int countInRange(int[] nums, int num, int lo, int hi) {
+        Arrays.sort(nums);
+        int cur = nums[0];
         int count = 0;
-        for (int i = lo; i <= hi; i++) {
-            if (nums[i] == num) {
+        for(int n : nums) {
+            if(cur == n)  {
                 count++;
+            } else if(cur != n) {
+                cur = n;
+                count = 1;
+            }
+            if(count > nums.length / 2) {
+                return cur;
             }
         }
-        return count;
-    }
-    public int divide(int[] nums, int lo, int hi) {
-        if(lo == hi) return nums[lo];
-        
-        int mid = (hi - lo)/ 2 + lo;
-        int left = divide(nums, lo, mid);
-        int right = divide(nums, mid + 1, hi);
-        if(left == right) return left;
-        
-        int leftCount = countInRange(nums, left, lo, hi);
-        int rightCount = countInRange(nums, right, lo, hi);
-        if(Math.max(leftCount, rightCount) == leftCount) return left;
-        return right;
+        return -1;
     }
 }
