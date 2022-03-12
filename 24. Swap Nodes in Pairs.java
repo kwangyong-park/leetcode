@@ -11,24 +11,21 @@ class Solution {
         if(head == null) return null;
         if(head.next == null) return head;
         ListNode result = head.next;
-        recursion(head, null, 0);
+        rec(head, null, 0);
         return result;
     }
-
-    public void recursion(ListNode node, ListNode pre, int index) {
+    
+    public void rec(ListNode node, ListNode pre, int step) {
         if(node == null) return;
         if(node.next == null) return;
-        if(index%2==0) {
+        if(step%2==0) {
             ListNode temp = node;
-            
             node = node.next;
             temp.next = node.next;
             node.next = temp;
             if(pre != null)  pre.next = node;
             
         }
-
-        recursion(node.next, node, index + 1);
-
+        rec(node.next, node, step+1);
     }
 }
