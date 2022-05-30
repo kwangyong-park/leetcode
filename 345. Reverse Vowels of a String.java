@@ -1,27 +1,22 @@
 class Solution {
-    public String reverseVowels(String s) {
-       int left = 0, right = s.length() -1;
-       char[] ans = s.toCharArray();
-       while(left < right) {
-           char leftAt = s.charAt(left);
-           char rightAt = s.charAt(right);
-           if(check(leftAt) && check(rightAt)) {
-               char temp = ans[left];
-               ans[left] = ans[right];
-               ans[right] = temp;
-               left++;
-               right--;
-           } else if(!check(leftAt)) {
-               left++;
-           } else if(!check(rightAt)) {
-               right--;
-           } 
-       }
-        return new String(ans);
-    }
-    public boolean check(char in) {
-        char at = Character.toLowerCase(in);
-        return at == 'a' || at == 'e' || 
-             at == 'i' || at == 'o' || at == 'u';
-    }
+   	public String reverseVowels(String s) {
+		List<Character> test = s.chars().filter(f -> check((char) f)).mapToObj(c -> (char)c).collect(Collectors.toList());
+		Stack<Character> stack = new Stack<>();
+		stack.addAll(test);
+
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0 ; i < s.length(); i++) {
+			if(check(s.charAt(i))) {
+				sb.append(stack.pop());
+			} else {
+				sb.append(s.charAt(i));
+			}
+		}
+		return sb.toString();
+	}
+	public boolean check(char in) {
+		char at = Character.toLowerCase(in);
+		return at == 'a' || at == 'e' ||
+				at == 'i' || at == 'o' || at == 'u';
+	}
 }
