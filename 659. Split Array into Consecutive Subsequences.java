@@ -1,31 +1,37 @@
-/**
-* Unsuccessful Problom
-*/
 class Solution {
-  public boolean isPossible(int[] nums) {
-    if(nums.length == 1){
-      return false;
-    }
-    return gd(nums, 1);
-
-  }
-
-  public boolean gd(int[] nums, int pivot) {
-
-    for(int i = pivot ; i < nums.length; i++) {
-      if(nums[i] > nums[i -1]) {
-
-      }else if(nums[i] == nums[i -1] && i- pivot  >=2 ){
-        if(!gd(nums, i+1)) {
-          return false;
-        } else {
-          return true;
+    public boolean isPossible(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int n : nums) {
+            map.put(n, map.getOrDefault(n, 0) + 1);
         }
-      } else {
-        return false;
-      }
-    }
-    return true;
-  }
+        PriorityQueue<Integer> q = new PriorityQueue<>(map.keySet());
+        
+        while (!q.isEmpty()) {
+            int min = q.peek();
+            int count = 0;
+            while(true) {
+                if(!map.containsKey(min)) {
+                    if(count < 3) {
+                        return false;
+                    }
+                    break;
+                }
+                map.put(min, map.get(min) - 1);
+                count++;
+                
+                if(map.get(min) == 0) {
+                    q.poll();
+                }
+                if (map.containsKey(min + 1) && map.get(min) + 1 > map.get(min + 1)) {
 
-}
+                    if (count < 3) return false;
+                    break;
+                }
+                min++;
+            }
+            
+        }
+        
+        return true;
+    }
+} 
