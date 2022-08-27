@@ -3,27 +3,27 @@ class Solution {
         if(strs.length == 0) {
             return "";
         }
-        char[] a = strs[0].toCharArray();
-        for(int i = 1 ; i < strs.length; i++) {
-            char[] b = strs[i].toCharArray();
-            char[] n = new char[a.length];
-            for(int j = 0; j < b.length; j++) {                                
-                if(a.length-1 < j) {
-                    break;
+        int idx = 0;
+        
+        checker: while(true) {
+            for(int i = 0; i < strs.length; i++) {
+                if(strs[i].length() == idx) {
+                    System.out.println("1");
+                    break checker;
                 }
-                if(a[j] == b[j]) {
-                    n[j] = a[j];
-                } else {
-                    break;
-                }
+                if(strs[0].charAt(idx) != strs[i].charAt(idx)) {
+                    System.out.println("2");
+                    break checker;
+                } 
             }
-            a = n;
+            idx++;
             
         }
-        if(a.length == 0) {
+        if(idx == 0) {
             return "";
         }
-        return new String(a).trim();
+        
+        return strs[0].substring(0, idx);  
         
     }
 }
