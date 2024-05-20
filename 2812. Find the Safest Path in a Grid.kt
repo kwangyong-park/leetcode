@@ -5,7 +5,6 @@ class Solution {
         val n = grid.size
         val m = grid[0].size
 
-        // Step 1: Compute the minimum distance from each cell to any thief using BFS
         val distance = Array(n) { IntArray(m) { Int.MAX_VALUE } }
         val queue: Queue<Pair<Int, Int>> = LinkedList()
 
@@ -30,7 +29,6 @@ class Solution {
             }
         }
 
-        // Step 2: Use binary search on the safeness factor
         var left = 0
         var right = n + m
         var result = 0
