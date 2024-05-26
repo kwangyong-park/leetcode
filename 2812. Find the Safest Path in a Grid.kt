@@ -1,36 +1,34 @@
 class Solution {
-    private val directions = arrayOf(Pair(0, 1), Pair(0, -1), Pair(1, 0), Pair(-1, 0))
+    val directions = arrayOf(1 to 0, -1 to 0, 0 to 1, 0 to -1)
 
     fun maximumSafenessFactor(grid: List<List<Int>>): Int {
-        val n = grid.size
-        val m = grid[0].size
+        val distance = Array(grid.size) { IntArray(grid[0].size) { Int.MIN_VALUE } }
+        val queue = LinkedList<Pair<Int, Int>>()
 
-        val distance = Array(n) { IntArray(m) { Int.MAX_VALUE } }
-        val queue: Queue<Pair<Int, Int>> = LinkedList()
-
-        for (i in 0 until n) {
-            for (j in 0 until m) {
-                if (grid[i][j] == 1) {
-                    queue.add(Pair(i, j))
-                    distance[i][j] = 0
+        for (x in grid.indices) {
+            for (y in grid[x].indices) {
+                if (grid[x][y] == 1) {
+                    queue.add(x to y)
+                    distance[x][y] = 0
                 }
             }
         }
 
         while (queue.isNotEmpty()) {
             val (x, y) = queue.poll()
-            for ((dx, dy) in directions) {
+            for (pivotArrow in directions) {
+                val (dx, dy) = pivotArrow
                 val nx = x + dx
                 val ny = y + dy
-                if (nx in 0 until n && ny in 0 until m && distance[nx][ny] == Int.MAX_VALUE) {
+                if (nx in grid.indices && ny in 0 until grid[0].size && distance[nx][ny] == Int.MIN_VALUE) {
                     distance[nx][ny] = distance[x][y] + 1
-                    queue.add(Pair(nx, ny))
+                    queue.add(nx to ny)
                 }
             }
         }
 
         var left = 0
-        var right = n + m
+        var right = grid.size + grid[0].size
         var result = 0
 
         while (left <= right) {
