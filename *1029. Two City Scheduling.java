@@ -9,9 +9,8 @@ class Solution {
         return o1[0] - o1[1] - (o2[0] - o2[1]);
       }
     });
-
     int total = 0;
-    int n = costs.length / 2;
+    int n = costs.length / 2; lp
     // To optimize the company expenses,
     // send the first n persons to the city A
     // and the others to the city B
