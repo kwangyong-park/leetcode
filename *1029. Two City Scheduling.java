@@ -1,5 +1,4 @@
 class Solution {
-  
   public int twoCitySchedCost(int[][] costs) {
     // Sort by a gain which company has 
     // by sending a person to city A and not to city B
