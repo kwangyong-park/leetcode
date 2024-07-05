@@ -12,7 +12,6 @@ class Solution {
                 map.add(sb.toString())
             }
         }
-
         val sub = mutableListOf<Int>()
         var cnt = 0
         for (i in minArray.indices) {
