@@ -1,4 +1,5 @@
 class Solution {
+    
     fun findLength(nums1: IntArray, nums2: IntArray): Int {
         val minArray = if (nums1.size > nums2.size) nums1 else nums2
         val maxArray = if (minArray == nums2) nums1 else nums2
