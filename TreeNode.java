@@ -12,7 +12,6 @@ public class TreeNode {
         this.left = left;
         this.right = right;
     }
-
     public static TreeNode buildTree(Integer[] arr) {
         TreeNode root = null;
         Queue<TreeNode> q = new LinkedList<>();
