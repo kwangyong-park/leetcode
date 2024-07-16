@@ -1,0 +1,50 @@
+class Solution {
+    fun getDirections(root: TreeNode?, startValue: Int, destValue: Int): String {
+        val endRoute = findRoot(root, destValue, mutableListOf())
+        val startRoute = findRoot(root, startValue, mutableListOf())
+        if(endRoute == null || startRoute == null) {
+            return ""
+        }
+        var matched = 0
+        for(i in 0 until minOf(endRoute.size, startRoute.size)) {
+            if(endRoute[i] != startRoute[i]) {
+                break
+            }
+           matched++
+        }
+
+        for(i in 0 until matched) {
+            startRoute.removeAt(0)
+            endRoute.removeAt(0)
+        }
+        return startRoute.joinToString("") { "U" } + endRoute.joinToString("")
+
+    }
+    private fun findRoot(root: TreeNode?, value: Int, route: MutableList<String>): MutableList<String>? {
+        if(root == null) {
+            return null
+        }
+        if(root.`val` == value) {
+            return route
+        }
+        if(root.left != null) {
+            route.add("L")
+            val ans = findRoot(root.left, value, route)
+            if(ans != null) {
+                return ans
+            } else {
+                route.removeAt(route.size - 1)
+            }
+        }
+        if(root.right != null){
+            route.add("R")
+            val ans = findRoot(root.right, value, route)
+            if(ans != null) {
+                return ans
+            } else {
+                route.removeAt(route.size - 1)
+            }
+        }
+        return null
+    }
+}
