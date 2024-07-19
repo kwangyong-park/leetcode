@@ -9,7 +9,6 @@ class Solution {
         if (root == null) {
             return
         }
-
         val shouldDelete = root.`val` in toDelete
         if (isRoot && !shouldDelete) {
             result.add(root)
