@@ -1,4 +1,5 @@
 class Solution {
+  
   public boolean repeatedSubstringPattern(String s) {
         if(s.length() == 0) return false;
         Queue<Character> queue = new LinkedList<>();
