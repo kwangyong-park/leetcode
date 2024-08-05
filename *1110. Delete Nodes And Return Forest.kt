@@ -4,7 +4,6 @@ class Solution {
         rec(root, null, to_delete.toSet(), result, true)
         return result
     }
-
     private fun rec(root: TreeNode?, parent: TreeNode?, toDelete: Set<Int>, result: MutableList<TreeNode?>, isRoot: Boolean) {
         if (root == null) {
             return
