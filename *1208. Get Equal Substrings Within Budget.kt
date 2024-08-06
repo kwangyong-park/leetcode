@@ -13,7 +13,6 @@ class Solution {
                 totalCost -= Math.abs(s[start].toInt() - t[start].toInt())
                 start++
             }
-
             // 현재 윈도우의 길이를 계산하여 최대 길이를 업데이트합니다.
             maxLength = Math.max(maxLength, end - start + 1)
         }
