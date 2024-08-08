@@ -15,8 +15,7 @@ class Solution {
             } else {
                 if(arrow > 0) {
                     x
-                } else {
-                    
+                } else {                    
                 }
             }
             if(idx == ans.length) {
