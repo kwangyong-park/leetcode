@@ -14,4 +14,3 @@ public class Solution {
         return s1.length() + s2.length() - 2 * dp[s1.length()][s2.length()];
     }
 }
-
